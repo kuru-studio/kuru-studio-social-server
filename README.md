@@ -37,7 +37,7 @@ For other cases please check the commands below.
 Rails takes care of our credentials. To update them, please do the following.
 ```
 # Enter bash inside the docker container
-➜ docker-compose up --build                               # Starts and rebuilds the project
+➜ docker-compose build                                    # Builds the project
 ➜ docker-compose run web bash                             # Enter bash inside the docker container
 ➜ EDITOR="vim" rails credentials:edit                     # Edit the credentials inside the docker container using Vim
 ```
