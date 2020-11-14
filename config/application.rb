@@ -24,6 +24,7 @@ module Myapp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
+    # Initialize config/default.yml so you can use it
     config.default = config_for(:default)
 
     # Settings in config/environments/* take precedence over those specified here.
