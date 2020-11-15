@@ -1,0 +1,2 @@
+class TestBlog < ApplicationRecord
+end
