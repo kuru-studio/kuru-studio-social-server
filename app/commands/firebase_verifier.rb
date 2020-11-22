@@ -1,3 +1,14 @@
+require 'jwt'
+require 'net/http'
+
+# This class holds 2 methods: 'encode' and 'decode'.
+# The 'encode' method is written just for testing purpose - I have other project
+# where I use this method in my tests to generate a test JWT token and use it
+# in further tests.
+# The 'decode' method is actually what you need. It helps you to verify
+# your Firebase ID token according to Firebase validation rules:
+# https://firebase.google.com/docs/auth/admin/verify-id-tokens#verify_id_tokens_using_a_third-party_jwt_library
+
 class FirebaseVerifier
   prepend SimpleCommand
 
@@ -9,7 +20,7 @@ class FirebaseVerifier
   end
 
   def encode(rsa_private)
-    valid_public_keys = FirebaseIDTokenVerifier.retrieve_and_cache_jwt_valid_public_keys
+    valid_public_keys = FirebaseVerifier.retrieve_and_cache_jwt_valid_public_keys
 
     payload = { :exp => Time.now.getutc.to_i+60*60, :iat => Time.now.getutc.to_i-60*60,
                 :aud => @firebase_project_id, :iss => 'https://securetoken.google.com/'+@firebase_project_id,
@@ -23,7 +34,7 @@ class FirebaseVerifier
   end
 
   def decode(id_token, public_key)
-    decoded_token, error = FirebaseIDTokenVerifier.decode_jwt_token(id_token, @firebase_project_id, nil)
+    decoded_token, error = FirebaseVerifier.decode_jwt_token(id_token, @firebase_project_id, nil)
     unless error.nil?
       raise error
     end
@@ -43,7 +54,7 @@ class FirebaseVerifier
       raise "Invalid access token 'alg' header (#{alg}). Must be '#{JWT_ALGORITHM}'."
     end
 
-    valid_public_keys = FirebaseIDTokenVerifier.retrieve_and_cache_jwt_valid_public_keys
+    valid_public_keys = FirebaseVerifier.retrieve_and_cache_jwt_valid_public_keys
     kid = headers['kid']
     unless valid_public_keys.keys.include?(kid)
       raise "Invalid access token 'kid' header, do not correspond to valid public keys."
@@ -65,7 +76,7 @@ class FirebaseVerifier
     # for this we need to decode one more time, but now with cert public key
     # More info: https://github.com/jwt/ruby-jwt/issues/216
     #
-    decoded_token, error = FirebaseIDTokenVerifier.decode_jwt_token(id_token, @firebase_project_id, public_key)
+    decoded_token, error = FirebaseVerifier.decode_jwt_token(id_token, @firebase_project_id, public_key)
     if decoded_token.nil?
       raise error
     end
@@ -155,7 +166,7 @@ class Rails
 end
 
 
-verifier = FirebaseIDTokenVerifier.new("quickblox-code-samples")
+verifier = FirebaseVerifier.new("quickblox-code-samples")
 
 rsa_private = OpenSSL::PKey::RSA.generate 2048
 rsa_public = rsa_private.public_key
@@ -167,7 +178,7 @@ puts "Done"
 puts
 
 
-# valid_public_keys = FirebaseIDTokenVerifier.retrieve_and_cache_jwt_valid_public_keys
+# valid_public_keys = FirebaseVerifier.retrieve_and_cache_jwt_valid_public_keys
 # kid = valid_public_keys.keys[0]
 # rsa_public = OpenSSL::X509::Certificate.new(kid).public_key
 puts "Decoding..."
