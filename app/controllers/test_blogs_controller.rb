@@ -1,51 +1,28 @@
 class TestBlogsController < ApplicationController
-  before_action :set_test_blog, only: [:show, :update, :destroy]
+  before_action :http_auth_header, only: [:index]
 
   # GET /test_blogs
   def index
-    @test_blogs = TestBlog.all
+    valid_public_keys = FirebaseVerifier.retrieve_and_cache_jwt_valid_public_keys
+    kid = valid_public_keys.keys[0]
+    rsa_public = OpenSSL::X509::Certificate.new(kid).public_key
+    render json: { :data => rsa_public }
+    # decoded_token = verifier.decode(http_auth_header, rsa_public)
 
-    render json: @test_blogs
-  end
+    # @firebase_data = {
+      # :payoad => decoded_token[0],
+      # :headers => decoded_token[1]
+    # }
 
-  # GET /test_blogs/1
-  def show
-    render json: @test_blog
-  end
-
-  # POST /test_blogs
-  def create
-    @test_blog = TestBlog.new(test_blog_params)
-
-    if @test_blog.save
-      render json: @test_blog, status: :created, location: @test_blog
-    else
-      render json: @test_blog.errors, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /test_blogs/1
-  def update
-    if @test_blog.update(test_blog_params)
-      render json: @test_blog
-    else
-      render json: @test_blog.errors, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /test_blogs/1
-  def destroy
-    @test_blog.destroy
+    # render json: @firebase_data
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_test_blog
-      @test_blog = TestBlog.find(params[:id])
-    end
-
-    # Only allow a trusted parameter "white list" through.
-    def test_blog_params
-      params.require(:test_blog).permit(:title, :description)
+    def http_auth_header
+      if request.headers['Authorization'].present?
+        return request.headers['Authorization'].split(' ').last
+      else
+        render json: { :error => "Missing Token" }
+      end
     end
 end
