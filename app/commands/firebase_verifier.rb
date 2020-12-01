@@ -1,3 +1,5 @@
+require 'net/http'
+
 class FirebaseVerifier
   prepend SimpleCommand
 
