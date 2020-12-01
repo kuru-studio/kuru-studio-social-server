@@ -7,6 +7,7 @@ class ApplicationController < ActionController::API
     rsa_public = OpenSSL::X509::Certificate.new(valid_public_keys[kid]).public_key
 
     decoded_token = verifier.decode(http_auth_header, rsa_public)
+    firebase_login(decoded_token[0]["user_id"])
   end
 
   private
@@ -16,5 +17,15 @@ class ApplicationController < ActionController::API
       else
         render json: { :error => "Missing Authentication Token" }
       end
+    end
+
+    def firebase_login(user_id)
+      @current_user = User.find_by(firebase_user_id: user_id)
+      if @current_user.nil?
+        @current_user = User.new
+        @current_user.firebase_user_id = user_id
+        @current_user.save
+      end
+      @current_user
     end
 end
