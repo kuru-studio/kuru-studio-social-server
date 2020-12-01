@@ -30,6 +30,7 @@ For other cases please check the commands below.
 ➜ docker-compose run web rails db:migrate                 # Run the migration
 ➜ docker-compose run web rails console                    # Open the rails console
 ➜ docker-compose run web rake routes |grep 'test_courses' # List routes with 'test_courses' in it
+➜ docker attach <CONTAINER_NAME>                          # Attach to the application container (for when you're trying to use Debugger/Byebug)
 ```
 
 ### Updating the environment credentials
