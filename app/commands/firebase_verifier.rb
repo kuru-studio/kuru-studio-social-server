@@ -3,7 +3,8 @@ require 'net/http'
 
 class FirebaseVerifier
   prepend SimpleCommand
-  VALID_JWT_PUBLIC_KEYS_RESPONSE_CACHE_KEY = "firebase_phone_jwt_public_keys_cache_key"
+
+  VALID_JWT_PUBLIC_KEYS_RESPONSE_CACHE_KEY = "firebase_jwt_public_keys_cache_key"
   JWT_ALGORITHM = 'RS256'
 
   def initialize(firebase_project_id)
@@ -92,25 +93,3 @@ class FirebaseVerifier
     valid_public_keys
   end
 end
-
-
-# verifier = FirebaseVerifier.new("quickblox-code-samples")
-
-# rsa_private = OpenSSL::PKey::RSA.generate 2048
-# rsa_public = rsa_private.public_key
-
-# puts "Encoding..."
-# encoded_token = verifier.encode(rsa_private)
-# puts encoded_token
-# puts "Done"
-# puts
-
-
-# valid_public_keys = FirebaseVerifier.retrieve_and_cache_jwt_valid_public_keys
-# kid = valid_public_keys.keys[0]
-# rsa_public = OpenSSL::X509::Certificate.new(kid).public_key
-# puts "Decoding..."
-# decoded_token = verifier.decode(encoded_token, rsa_public)
-# puts decoded_token[0] # payload
-# puts decoded_token[1] # headers
-# puts "Done"
