@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::API
   def authenticate_user!
-    verifier = FirebaseVerifier.new("kuru-studio-social-firebase")
+    verifier = FirebaseVerifier.new(Rails.application.credentials.send(Rails.env)[:database][:firebase_project_id])
 
     valid_public_keys = FirebaseVerifier.retrieve_and_cache_jwt_valid_public_keys
     kid = valid_public_keys.keys[0]
