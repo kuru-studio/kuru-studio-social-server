@@ -7,13 +7,6 @@ class ApplicationController < ActionController::API
     rsa_public = OpenSSL::X509::Certificate.new(valid_public_keys[kid]).public_key
 
     decoded_token = verifier.decode(http_auth_header, rsa_public)
-
-    @firebase_data = {
-      :payload => decoded_token[0],
-      :headers => decoded_token[1]
-    }
-
-    render json: @firebase_data
   end
 
   private

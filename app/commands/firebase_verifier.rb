@@ -45,15 +45,15 @@ class FirebaseVerifier
     begin
       decoded_token = JWT.decode(firebase_jwt_token, public_key, !public_key.nil?, custom_options)
     rescue JWT::ExpiredSignature
-      render json: { :error => "Invalid access token. 'Expiration time' (exp) must be in the future." }
+      return nil, "Invalid access token. 'Expiration time' (exp) must be in the future."
     rescue JWT::InvalidIatError
-      render json: { :error => "Invalid access token. 'Issued-at time' (iat) must be in the past." }
+      return nil, "Invalid access token. 'Issued-at time' (iat) must be in the past."
     rescue JWT::InvalidAudError
-      render json: { :error => "Invalid access token. 'Audience' (aud) must be your Firebase project ID, the unique identifier for your Firebase project." }
+      return nil, "Invalid access token. 'Audience' (aud) must be your Firebase project ID, the unique identifier for your Firebase project."
     rescue JWT::InvalidIssuerError
-      render json: { :error => "Invalid access token. 'Issuer' (iss) Must be 'https://securetoken.google.com/<projectId>', where <projectId> is your Firebase project ID." }
+      return nil, "Invalid access token. 'Issuer' (iss) Must be 'https://securetoken.google.com/<projectId>', where <projectId> is your Firebase project ID."
     rescue JWT::VerificationError
-      render json: { :error => "Invalid access token. Signature verification failed." }
+      return nil, "Invalid access token. Signature verification failed."
     end
     return decoded_token, nil
   end
