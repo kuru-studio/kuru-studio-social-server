@@ -16,11 +16,12 @@ class ApplicationController < ActionController::API
     render json: @firebase_data
   end
 
-  def http_auth_header
-    if request.headers['Authorization'].present?
-      return request.headers['Authorization'].split(' ').last
-    else
-      render json: { :error => "Missing Token" }
+  private
+    def http_auth_header
+      if request.headers['Authorization'].present?
+        return request.headers['Authorization'].split(' ').last
+      else
+        render json: { :error => "Missing Authentication Token" }
+      end
     end
-  end
 end
