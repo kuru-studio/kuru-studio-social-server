@@ -1,6 +1,3 @@
-require 'jwt'
-require 'net/http'
-
 class FirebaseVerifier
   prepend SimpleCommand
 
@@ -9,17 +6,6 @@ class FirebaseVerifier
 
   def initialize(firebase_project_id)
     @firebase_project_id = firebase_project_id
-  end
-
-  def encode(rsa_private)
-    valid_public_keys = FirebaseVerifier.retrieve_and_cache_jwt_valid_public_keys
-    payload = { :exp => Time.now.getutc.to_i+60*60, :iat => Time.now.getutc.to_i-60*60,
-                :aud => @firebase_project_id, :iss => 'https://securetoken.google.com/'+@firebase_project_id,
-                :sub => "325230123348"}
-    kid = valid_public_keys.keys[0]
-    headers = {:alg => JWT_ALGORITHM, :kid => kid}
-    encoded_token = JWT.encode payload, rsa_private, JWT_ALGORITHM, headers
-    encoded_token
   end
 
   def decode(id_token, public_key)
