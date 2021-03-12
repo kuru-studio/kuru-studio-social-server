@@ -31,6 +31,9 @@ gem 'jwt'
 # Create commands that you can easily use in controllers and models
 gem 'simple_command'
 
+# Add GraphQL support
+gem 'graphql', '1.9.17'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
