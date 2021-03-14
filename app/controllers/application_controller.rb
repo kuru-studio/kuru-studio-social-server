@@ -10,6 +10,14 @@ class ApplicationController < ActionController::API
     firebase_login(decoded_token[0]["user_id"])
   end
 
+  def user_signed_in?
+    # Should return a boolean indicating if a user is signed in or not
+  end
+
+  def current_user
+    # Should return an object containing the current user
+  end
+
   private
     def http_auth_header
       if request.headers['Authorization'].present?
