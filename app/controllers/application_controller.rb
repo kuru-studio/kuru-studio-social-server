@@ -33,12 +33,12 @@ class ApplicationController < ActionController::API
     end
 
     def firebase_login(user_id)
-      current_user = User.find_by_firebase_user_id(user_id)
-      if current_user.nil?
-        current_user = User.new
-        current_user.firebase_user_id = user_id
-        current_user.save
+      logged_in_user = User.find_by_firebase_user_id(user_id)
+      if logged_in_user.nil?
+        logged_in_user = User.new
+        logged_in_user.firebase_user_id = user_id
+        logged_in_user.save
       end
-      current_user
+      logged_in_user
     end
 end
