@@ -1,8 +1,4 @@
 class ApplicationController < ActionController::API
-  def authenticate_user!
-    @current_user = user_authenticator
-  end
-
   def user_signed_in?
     return false if @current_user.nil?
     true
@@ -13,6 +9,10 @@ class ApplicationController < ActionController::API
   end
 
   private
+    def authenticate_user!
+      @current_user ||= user_authenticator
+    end
+
     def http_auth_header
       if request.headers['Authorization'].present?
         return request.headers['Authorization'].split(' ').last
