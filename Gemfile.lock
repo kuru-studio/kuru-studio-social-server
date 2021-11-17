@@ -88,7 +88,6 @@ GEM
     marcel (0.3.3)
       mimemagic (~> 0.3.2)
     method_source (1.0.0)
-    mimemagic (0.3.5)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     minitest (5.14.2)
@@ -164,6 +163,7 @@ DEPENDENCIES
   graphql (= 1.9.17)
   jwt
   listen (~> 3.2)
+  mimemagic!
   pg (>= 0.18, < 2.0)
   puma (~> 4.1)
   rack-cors
