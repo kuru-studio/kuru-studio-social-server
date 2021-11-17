@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_12_072557) do
+ActiveRecord::Schema.define(version: 2021_11_17_061548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,9 +23,11 @@ ActiveRecord::Schema.define(version: 2021_03_12_072557) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "firebase_user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
+    t.string "email"
+    t.string "password_digest"
   end
 
 end
