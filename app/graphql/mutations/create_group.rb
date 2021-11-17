@@ -11,6 +11,7 @@ module Mutations
       Group.create!(
         name: name,
         description: description,
+        user: context[:current_user]
       )
     end
   end
