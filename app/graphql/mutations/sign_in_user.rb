@@ -13,11 +13,6 @@ module Mutations
 
       user = User.find_by email: credentials[:email]
 
-      crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
-      token = crypt.encrypt_and_sign("user-id:#{ user.id }")
-
-      context[:session][:token] = token
-
       # ensures we have the correct user
       return unless user
       return unless user.authenticate(credentials[:password])
