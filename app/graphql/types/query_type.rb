@@ -1,12 +1,9 @@
 module Types
   class QueryType < Types::BaseObject
-    # queries are just represented as fields
-    # `all_groups` is automatically camelcased to `allGroups`
     field :all_groups, [GroupType], null: false
+    field :all_posts, [PostType], null: false
 
-    # this method is invoked, when `all_group` fields is being resolved
-    def all_groups
-      Group.all
-    end
+    def all_groups() Group.all end
+    def all_posts() Post.all end
   end
 end
