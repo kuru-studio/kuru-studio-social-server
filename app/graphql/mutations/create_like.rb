@@ -5,8 +5,8 @@ module Mutations
     type Types::LikeType
 
     def resolve(post_id: nil)
-      Vote.create!(
-        link: Post.find(post_id),
+      Like.create!(
+        post: Post.find(post_id),
         user: context[:current_user]
       )
     end
