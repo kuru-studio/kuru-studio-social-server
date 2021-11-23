@@ -8,7 +8,8 @@ module Mutations
 
     def resolve(content: nil)
       Post.create!(
-        content: content
+        content: content,
+        user: context[:current_user]
       )
     end
   end
