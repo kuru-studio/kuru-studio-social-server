@@ -6,7 +6,7 @@ module Mutations
     # return type from the mutation
     type Types::PostType
 
-    def resolve(name: nil, description: nil)
+    def resolve(content: nil)
       Post.create!(
         content: content
       )
