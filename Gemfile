@@ -30,7 +30,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'rack-cors'
 
 # JSON Web Token for decoding tokens
-gem 'jwt'
+# gem 'jwt'
 
 # Create commands that you can easily use in controllers and models
 gem 'simple_command'
