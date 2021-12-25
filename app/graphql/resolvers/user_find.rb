@@ -3,7 +3,7 @@ class Resolvers::UserFind < GraphQL::Schema::Resolver
 
   argument :id, ID, required: true
 
-  def resolve(context)
-    User.find(context[:id])
+  def resolve(id:)
+    User.find(id)
   end
 end
