@@ -9,6 +9,8 @@ module Types
     field :last_name, String, null: false
     field :short_description, String, null: false
     field :about, String, null: false
+    field :display_photo_url, String, null: false
+    field :cover_photo_url, String, null: false
 
     field :posts, [PostType], null: false
     field :likes, [LikeType], null: false
