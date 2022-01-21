@@ -11,6 +11,7 @@ module Types
     field :about, String, null: false
     field :display_photo_url, String, null: false
     field :cover_photo_url, String, null: false
+    field :interests, [String], null: false
 
     field :posts, [PostType], null: false
     field :likes, [LikeType], null: false
