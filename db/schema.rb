@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_21_192423) do
+ActiveRecord::Schema.define(version: 2022_01_21_203115) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 2022_01_21_192423) do
     t.text "about"
     t.string "display_photo_url"
     t.string "cover_photo_url"
+    t.string "interests", default: [], array: true
   end
 
   add_foreign_key "groups", "users"
