@@ -6,8 +6,7 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true, format: { with: /\A[a-zA-Z0-9]+\Z/ }, length: {minimum: 3, maximum: 20}
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
-  before_save { first_name.capitalize! }
-  before_save { last_name.capitalize! }
+  before_save :capitalize_attributes
 
   has_many :likes
   has_many :posts
@@ -26,4 +25,13 @@ class User < ApplicationRecord
   def send_invitation(user)
     invitations.create(friend_id: user.id)
   end
+
+  private
+    def capitalize_attributes
+      titlecasable = ["first_name","last_name"]
+      self.attributes.each do |attr,val|
+        self.send("#{attr}=",val.strip.titlecase) if titlecasable.include?(attr) && !val.nil?
+        self.send("#{attr}=",val.to_s.strip.titlecase) if titlecasable.include?(attr)
+      end
+    end
 end
