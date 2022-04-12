@@ -5,5 +5,7 @@ module Types
     field :create_post, mutation: Mutations::CreatePost
     field :create_like, mutation: Mutations::CreateLike
     field :signin_user, mutation: Mutations::SignInUser
+    field :add_friend, mutation: Mutations::AddFriend
+    field :update_invitation, mutation: Mutations::UpdateInvitation
   end
 end
