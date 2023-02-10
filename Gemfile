@@ -32,9 +32,6 @@ gem 'rack-cors'
 # JSON Web Token for decoding tokens
 # gem 'jwt'
 
-# Create commands that you can easily use in controllers and models
-gem 'simple_command'
-
 # Add GraphQL support
 gem 'graphql', '1.9.17'
 
