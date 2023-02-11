@@ -1,9 +1,9 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: <%= Rails.application.credentials.send(Rails.env)[:database][:host] %>
-  username: <%= Rails.application.credentials.send(Rails.env)[:database][:username] %>
-  password: <%= Rails.application.credentials.send(Rails.env)[:database][:password] %>
+  host: db
+  username: postgres
+  password: password
   pool: 5
 
 development:

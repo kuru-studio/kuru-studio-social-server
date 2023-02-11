@@ -1,9 +1,0 @@
-default: &default
-  root_path: "https://social.kuru.studio/"
-
-development:
-  <<: *default
-  root_path: "http://localhost:3001/"
-
-production:
-  <<: *default

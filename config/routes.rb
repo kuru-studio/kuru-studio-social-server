@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
-  post "/data", to: "graphql#execute"
-  root to: redirect(Rails.configuration.default[:root_path])
+  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+  # Defines the root path route ("/")
+  # root "articles#index"
 end

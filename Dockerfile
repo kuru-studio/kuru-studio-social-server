@@ -1,11 +1,11 @@
-FROM ruby:2.7.2
+FROM ruby:3.2.1
 RUN apt-get update -qq && apt-get install -y vim postgresql-client
-RUN mkdir /myapp
-WORKDIR /myapp
-COPY Gemfile /myapp/Gemfile
-COPY Gemfile.lock /myapp/Gemfile.lock
+RUN mkdir /server
+WORKDIR /server
+COPY Gemfile /server/Gemfile
+COPY Gemfile.lock /server/Gemfile.lock
 RUN bundle install
-COPY . /myapp
+COPY . /server
 
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/

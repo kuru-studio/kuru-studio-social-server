@@ -2,8 +2,8 @@
 The server of Kuru Studio Social. Hosted on Heroku.
 
 ## Version
-- Rails ~> 6.0.3.4
-- Ruby ~> 2.7.2
+- Rails ~> 7.0.4.2
+- Ruby ~> 3.2.1
 
 ## Set-up
 You need to have **Docker** and **Docker Compose** installed on your machine to be able to run the following commands. You also need to setup the `config/master.key` before running the commands to make sure that everything will work fine.

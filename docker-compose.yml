@@ -1,4 +1,3 @@
-version: "3.8"
 services:
   db:
     image: postgres
@@ -7,12 +6,10 @@ services:
     environment:
       POSTGRES_PASSWORD: password
   web:
-    tty: true
-    stdin_open: true
     build: .
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
-      - .:/myapp
+      - .:/server
     ports:
       - "3000:3000"
     depends_on:
