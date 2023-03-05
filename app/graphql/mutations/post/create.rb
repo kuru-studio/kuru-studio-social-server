@@ -8,7 +8,10 @@ module Mutations
 
       def resolve(post_attributes:)
         check_authentication!
-        post = ::Post.new(content: post_attributes[:content])
+        post = ::Post.new(
+          content: post_attributes[:content],
+          user_id: context[:current_user].id
+        )
 
         if post.save
           {

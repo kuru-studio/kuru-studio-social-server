@@ -9,8 +9,7 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      # Query context goes here, for example:
-      # current_user: current_user,
+      current_user: current_user
     }
     result = ServerSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
@@ -20,6 +19,15 @@ class GraphqlController < ApplicationController
   end
 
   private
+
+  def current_user
+    return nil if request.headers['Authorization'].blank?
+    token = request.headers['Authorization']
+    crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
+    token = crypt.decrypt_and_verify token
+    user_id = token.gsub('user-id:', '').to_i
+    User.find user_id
+  end
 
   # Handle variables in form data, JSON body, or a blank value
   def prepare_variables(variables_param)
