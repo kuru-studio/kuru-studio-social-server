@@ -23,10 +23,14 @@ class GraphqlController < ApplicationController
   def current_user
     return nil if request.headers['Authorization'].blank?
     token = request.headers['Authorization']
-    crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
-    token = crypt.decrypt_and_verify token
-    user_id = token.gsub('user-id:', '').to_i
-    User.find user_id
+    if token.blank?
+      crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
+      verified_token = crypt.decrypt_and_verify token
+      user_id = verified_token.gsub('user-id:', '').to_i
+      User.find user_id
+    else
+      return nil
+    end
   end
 
   # Handle variables in form data, JSON body, or a blank value
