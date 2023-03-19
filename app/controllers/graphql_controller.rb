@@ -20,19 +20,6 @@ class GraphqlController < ApplicationController
 
   private
 
-  def current_user
-    return nil if request.headers['Authorization'].blank?
-    token = request.headers['Authorization']
-    if token.blank?
-      return nil
-    else
-      crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
-      verified_token = crypt.decrypt_and_verify token
-      user_id = verified_token.gsub('user-id:', '')
-      User.find user_id
-    end
-  end
-
   # Handle variables in form data, JSON body, or a blank value
   def prepare_variables(variables_param)
     case variables_param
@@ -58,5 +45,18 @@ class GraphqlController < ApplicationController
     logger.error e.backtrace.join("\n")
 
     render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: 500
+  end
+
+  def current_user
+    return nil if request.headers['Authorization'].blank?
+    token = request.headers['Authorization']
+    if token.blank?
+      return nil
+    else
+      crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
+      verified_token = crypt.decrypt_and_verify token
+      user_id = verified_token.gsub('user-id:', '')
+      User.find user_id
+    end
   end
 end
