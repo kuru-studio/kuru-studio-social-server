@@ -8,9 +8,9 @@ default: &default
 
 development:
   <<: *default
-  database: myapp_development
+  database: kuru_studio_development
 
 
 test:
   <<: *default
-  database: myapp_test
+  database: kuru_studio_test
