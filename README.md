@@ -1,5 +1,5 @@
 # Kuru Studio Social (Server)
-The server of Kuru Studio Social. Hosted on Heroku.
+The server of Kuru Studio Social. Hosted on Heroku. You can access the server locally on port `3001`.
 
 ## Version
 - Rails ~> 7.0.4.2
