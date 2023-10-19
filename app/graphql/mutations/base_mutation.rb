@@ -4,7 +4,6 @@ module Mutations
     field_class Types::BaseField
     input_object_class Types::BaseInputObject
     object_class Types::BaseObject
-
     # Fix for duplicate CreateInput error that stops the schema from being loaded
     # Issue Link: https://github.com/rmosolgo/graphql-ruby/issues/3919
     def self.default_graphql_name
