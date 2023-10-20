@@ -10,7 +10,7 @@ You need to have **Docker** and **Docker Compose** installed on your machine to 
 ```
 # Open your default terminal and run the following
 ➜ docker-compose build                                    # Builds the project
-➜ docker-compose run web rake db:create                   # Builds the database
+➜ docker-compose run web bin/setup                        # Builds and populate the database
 ➜ docker-compose up                                       # Starts the server
 ```
 
