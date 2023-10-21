@@ -20,20 +20,37 @@ users = [
 
 # Create 10 posts with quotes
 quotes = [
-  "The world isn’t perfect. But it’s there for us, doing the best it can. That’s what makes it so damn beautiful. — Roy Mustang (Full Metal Alchemist)",
-  "I will always love you, no matter which what time, or where I am. I’ll say it one more time. I love you. — Okabe (Steins; Gate)",
-  "I’ll leave tomorrow’s problems to tomorrow’s me. – Saitama (One-Punch Man)",
-  "I, Lelouch vi Britannia, command you! — Lelouch Lamperouge (Code Geass)",
-  "I'm going to be the Pirate King! — Monkey D. Luffy (One Piece)",
-  "A lesson without pain is meaningless. For you cannot gain something without sacrificing something else in return. — Edward Elric (Full Metal Alchemist)",
-  "I'm not gonna run away, I never go back on my word! That's my nindo: my ninja way! — Naruto Uzumaki (Naruto)",
-  "I'm not going there to die. I'm going to find out if I'm really alive. — Spike Spiegel (Cowboy Bebop)",
-  "If you want to get to know someone, find out what makes them angry. — Gon Freecss (Hunter x Hunter)",
-  "It's not the world that's messed up; it's those of us in it. — Kaneki Ken (Tokyo Ghoul)"
+  "The world isn’t perfect. But it’s there for us, doing the best it can. That’s what makes it so damn beautiful.",
+  "I will always love you, no matter which what time, or where I am. I’ll say it one more time. I love you.",
+  "I’ll leave tomorrow’s problems to tomorrow’s me.",
+  "I, Lelouch vi Britannia, command you!",
+  "I'm going to be the Pirate King!",
+  "A lesson without pain is meaningless. For you cannot gain something without sacrificing something else in return.",
+  "I'm not gonna run away, I never go back on my word! That's my nindo: my ninja way!",
+  "I'm not going there to die. I'm going to find out if I'm really alive.",
+  "If you want to get to know someone, find out what makes them angry.",
+  "It's not the world that's messed up; it's those of us in it."
 ]
+
+# Create 10 comments
+comments = [
+  "This comment was made by Roy Mustang (Full Metal Alchemist)",
+  "This comment was made by Okabe (Steins; Gate)",
+  "This comment was made by Saitama (One-Punch Man)",
+  "This comment was made by Lelouch Lamperouge (Code Geass)",
+  "This comment was made by Monkey D. Luffy (One Piece)",
+  "This comment was made by Edward Elric (Full Metal Alchemist)",
+  "This comment was made by Naruto Uzumaki (Naruto)",
+  "This comment was made by Spike Spiegel (Cowboy Bebop)",
+  "This comment was made by Gon Freecss (Hunter x Hunter)",
+  "This comment was made by Kaneki Ken (Tokyo Ghoul)"
+]
+
+
 
 # Create users and posts
 users.each_with_index do |user, index|
   created_user = User.create(user)
-  Post.create(content: quotes[index], user_id: created_user.id)
+  created_post = Post.create(content: quotes[index], user_id: created_user.id)
+  Comment.create(commentable: created_post, body: comments[index], user_id: created_user.id)
 end
