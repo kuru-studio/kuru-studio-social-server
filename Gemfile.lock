@@ -108,6 +108,9 @@ GEM
     nio4r (2.5.8)
     nokogiri (1.14.1-x86_64-linux)
       racc (~> 1.4)
+    paper_trail (15.1.0)
+      activerecord (>= 6.1)
+      request_store (~> 1.4)
     pg (1.4.5)
     puma (5.6.5)
       nio4r (~> 2.0)
@@ -144,6 +147,8 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
+    request_store (1.5.1)
+      rack (>= 1.4)
     thor (1.2.1)
     timeout (0.3.1)
     tzinfo (2.0.6)
@@ -162,6 +167,7 @@ DEPENDENCIES
   bootsnap
   debug
   graphql (= 2.0.16)
+  paper_trail
   pg (~> 1.1)
   puma (~> 5.0)
   rack-cors
