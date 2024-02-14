@@ -14,7 +14,9 @@ module Mutations
         ::User.create!(
           name: name,
           email: auth_provider&.[](:credentials)&.[](:email),
-          password: auth_provider&.[](:credentials)&.[](:password)
+          password: auth_provider&.[](:credentials)&.[](:password),
+          password_confirmation: auth_provider&.[](:credentials)&.[](:password),
+          confirmed_at: Time.now
         )
       end
     end

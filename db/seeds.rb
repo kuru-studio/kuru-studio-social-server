@@ -50,7 +50,10 @@ comments = [
 
 # Create users and posts
 users.each_with_index do |user, index|
-  created_user = User.create(user)
+  created_user = User.new(user)
+  created_user.password_confirmation = user[:password]
+  created_user.confirmed_at = Time.now
+  created_user.save
   created_post = Post.create(content: quotes[index], user_id: created_user.id)
   Comment.create(commentable: created_post, body: comments[index], user_id: created_user.id)
 end
