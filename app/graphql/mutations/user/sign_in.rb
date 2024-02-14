@@ -16,7 +16,7 @@ module Mutations
 
         # ensures we have the correct user
         return unless user
-        return unless user.authenticate(credentials[:password])
+        return unless user.valid_password?(credentials[:password])
 
         # use Ruby on Rails - ActiveSupport::MessageEncryptor, to build a token
         crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
