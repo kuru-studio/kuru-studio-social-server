@@ -9,7 +9,8 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      current_user: current_user
+      current_user: current_user,
+      current_tenant: current_tenant
     }
     result = ServerSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
@@ -58,5 +59,8 @@ class GraphqlController < ApplicationController
       user_id = verified_token.gsub('user-id:', '')
       User.find user_id
     end
+  end
+
+  def current_tenant
   end
 end
