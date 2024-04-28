@@ -10,5 +10,6 @@ class User < ApplicationRecord
   has_paper_trail
   has_many :posts, class_name: 'Post', foreign_key: :user_id, dependent: :destroy
 
+  validates :tenant, presence: true
   validates :name, presence: true
 end
