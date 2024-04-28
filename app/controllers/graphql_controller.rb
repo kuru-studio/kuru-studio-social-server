@@ -72,6 +72,7 @@ class GraphqlController < ApplicationController
     return nil unless tenant
     request_domain = URI.parse(request.original_url).host
     allowed_domains = tenant.allowed_domains || []
+    allowed_domains = ["localhost"] if Rails.env.development? || Rails.env.test?
     allowed_domain = allowed_domains.find { |domain| request_domain.end_with?(domain) }
     allowed_domain ? tenant : nil
   end
