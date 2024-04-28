@@ -62,5 +62,13 @@ class GraphqlController < ApplicationController
   end
 
   def current_tenant
+    return nil if request.headers['X-tenant-api-key'].blank?
+    api_key = request.headers['X-tenant-api-key']
+    tenant = Tenant.find_by(api_key: api_key)
+    return nil unless tenant
+    request_domain = URI.parse(request.original_url).host
+    allowed_domains = tenant.allowed_domains || []
+    allowed_domain = allowed_domains.find { |domain| request_domain.end_with?(domain) }
+    allowed_domain ? tenant : nil
   end
 end
