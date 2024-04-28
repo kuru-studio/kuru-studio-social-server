@@ -13,7 +13,8 @@ module Mutations
           body: comment_attributes[:body],
           commentable_type: comment_attributes[:commentable_type],
           commentable_id: comment_attributes[:commentable_id],
-          user_id: context[:current_user].id
+          user_id: context[:current_user].id,
+          tenant_id: context[:current_tenant].id
         )
 
         if comment.save

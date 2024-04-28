@@ -11,7 +11,8 @@ module Mutations
         check_authentication!
         post = ::Post.new(
           content: post_attributes[:content],
-          user_id: context[:current_user].id
+          user_id: context[:current_user].id,
+          tenant_id: context[:current_tenant].id
         )
 
         if post.save

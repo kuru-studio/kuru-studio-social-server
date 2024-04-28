@@ -57,7 +57,10 @@ class GraphqlController < ApplicationController
       crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
       verified_token = crypt.decrypt_and_verify token
       user_id = verified_token.gsub('user-id:', '')
-      User.find user_id
+      User.find_by(
+        id: user_id,
+        tenant_id: current_tenant.id
+      )
     end
   end
 
