@@ -7,6 +7,7 @@ module Mutations
       field :errors, [String], null: true
 
       def resolve(comment_attributes:)
+        check_tenant!
         check_authentication!
         comment = ::Comment.new(
           body: comment_attributes[:body],

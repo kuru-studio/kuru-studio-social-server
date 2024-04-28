@@ -7,6 +7,7 @@ module Mutations
       field :errors, [String], null: true
 
       def resolve(update_user_attributes:)
+        check_tenant!
         check_authentication!
         user = context[:current_user]
         user.name = update_user_attributes[:name]
