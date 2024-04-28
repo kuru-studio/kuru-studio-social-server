@@ -7,12 +7,14 @@ module Mutations
       field :errors, [String], null: true
 
       def resolve(comment_attributes:)
+        check_tenant!
         check_authentication!
         comment = ::Comment.new(
           body: comment_attributes[:body],
           commentable_type: comment_attributes[:commentable_type],
           commentable_id: comment_attributes[:commentable_id],
-          user_id: context[:current_user].id
+          user_id: context[:current_user].id,
+          tenant_id: context[:current_tenant].id
         )
 
         if comment.save

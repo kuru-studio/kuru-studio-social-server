@@ -7,6 +7,7 @@ module Queries
       type [Types::PostType], null: false
 
       def resolve(limit: 20, offset: 0)
+        check_tenant!
         check_authentication!
 
         posts = ::Post.order('created_at DESC')

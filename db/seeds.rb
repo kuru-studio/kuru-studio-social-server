@@ -46,14 +46,30 @@ comments = [
   "This comment was made by Kaneki Ken (Tokyo Ghoul)"
 ]
 
+tenant_keys = [
+  "purrintables",
+  "kurustudio",
+  "boseriko",
+]
 
+tenant_domains = [
+  ["purrintables.com"],
+  ["kuru.studio", "server.kuru.studio", "social.kuru.studio"],
+  ["boseriko.com"],
+]
+
+# Create tenants
+tenant_keys.each_with_index do |tenant, index|
+  Tenant.create(api_key: tenant_keys[index], allowed_domains: tenant_domains[index])
+end
 
 # Create users and posts
 users.each_with_index do |user, index|
   created_user = User.new(user)
   created_user.password_confirmation = user[:password]
   created_user.confirmed_at = Time.now
+  created_user.tenant_id = Tenant.first.id
   created_user.save
-  created_post = Post.create(content: quotes[index], user_id: created_user.id)
-  Comment.create(commentable: created_post, body: comments[index], user_id: created_user.id)
+  created_post = Post.create(content: quotes[index], user_id: created_user.id, tenant_id: Tenant.first.id)
+  Comment.create(commentable: created_post, body: comments[index], user_id: created_user.id, tenant_id: Tenant.first.id)
 end

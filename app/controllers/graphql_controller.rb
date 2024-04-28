@@ -9,7 +9,8 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      current_user: current_user
+      current_user: current_user,
+      current_tenant: current_tenant
     }
     result = ServerSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
@@ -56,7 +57,23 @@ class GraphqlController < ApplicationController
       crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
       verified_token = crypt.decrypt_and_verify token
       user_id = verified_token.gsub('user-id:', '')
-      User.find user_id
+      tenant = current_tenant
+      User.find_by(
+        id: user_id,
+        tenant_id: tenant.id
+      )
     end
+  end
+
+  def current_tenant
+    return nil if request.headers['X-tenant-api-key'].blank?
+    api_key = request.headers['X-tenant-api-key']
+    tenant = Tenant.find_by(api_key: api_key)
+    return nil unless tenant
+    request_domain = URI.parse(request.original_url).host
+    allowed_domains = tenant.allowed_domains || []
+    allowed_domains = ["localhost"] if Rails.env.development? || Rails.env.test?
+    allowed_domain = allowed_domains.find { |domain| request_domain.end_with?(domain) }
+    allowed_domain ? tenant : nil
   end
 end

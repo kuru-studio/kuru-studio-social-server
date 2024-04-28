@@ -9,10 +9,14 @@ module Mutations
       field :user, Types::UserType, null: true
 
       def resolve(credentials: nil)
+        check_tenant!
         # basic validation
         return unless credentials
 
-        user = ::User.find_by email: credentials[:email]
+        user = ::User.find_by(
+          email: credentials[:email],
+          tenant_id: context[:current_tenant].id
+        )
 
         # ensures we have the correct user
         return unless user

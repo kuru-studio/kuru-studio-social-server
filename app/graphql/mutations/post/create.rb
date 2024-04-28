@@ -7,10 +7,12 @@ module Mutations
       field :errors, [String], null: true
 
       def resolve(post_attributes:)
+        check_tenant!
         check_authentication!
         post = ::Post.new(
           content: post_attributes[:content],
-          user_id: context[:current_user].id
+          user_id: context[:current_user].id,
+          tenant_id: context[:current_tenant].id
         )
 
         if post.save

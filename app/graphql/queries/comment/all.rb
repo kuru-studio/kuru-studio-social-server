@@ -9,6 +9,7 @@ module Queries
       type [Types::CommentType], null: false
 
       def resolve(limit: 20, offset: 0, commentable_type:, commentable_id:)
+        check_tenant!
         check_authentication!
 
         comment = ::Comment.where(
