@@ -59,7 +59,7 @@ tenant_domains = [
 ]
 
 # Create tenants
-tenants.each_with_index do |tenant, index|
+tenant_keys.each_with_index do |tenant, index|
   Tenant.create(api_key: tenant_keys[index], allowed_domains: tenant_domains[index])
 end
 
@@ -68,8 +68,8 @@ users.each_with_index do |user, index|
   created_user = User.new(user)
   created_user.password_confirmation = user[:password]
   created_user.confirmed_at = Time.now
-  current_user.tenant = Tenant.first
+  created_user.tenant_id = Tenant.first.id
   created_user.save
-  created_post = Post.create(content: quotes[index], user_id: created_user.id, tenant: Tenant.first)
-  Comment.create(commentable: created_post, body: comments[index], user_id: created_user.id, tenant: Tenant.first)
+  created_post = Post.create(content: quotes[index], user_id: created_user.id, tenant_id: Tenant.first.id)
+  Comment.create(commentable: created_post, body: comments[index], user_id: created_user.id, tenant_id: Tenant.first.id)
 end
