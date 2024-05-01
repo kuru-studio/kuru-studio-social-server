@@ -54,7 +54,7 @@ class GraphqlController < ApplicationController
     if token.blank?
       return nil
     else
-      firebase_project_id = Rails.application.credentials.send(Rails.env)[:database][:firebase_project_id]
+      firebase_project_id = Rails.application.credentials.dig(:database, :firebase_project_id)
       firebase_verifier = FirebaseVerifierService.new(firebase_project_id)
       public_key = nil
       decoded_token = firebase_verifier.decode(token, public_key)
