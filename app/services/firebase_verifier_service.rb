@@ -12,7 +12,7 @@ class FirebaseVerifierService
 
   def decode(id_token, public_key)
     decoded_token, error = decode_jwt_token(id_token, @firebase_project_id, public_key)
-    raise error unless error.nil?
+    raise error if error || decoded_token.nil?
 
     payload = decoded_token[0]
     headers = decoded_token[1]
@@ -27,9 +27,6 @@ class FirebaseVerifierService
 
     sub = payload['sub']
     raise "Invalid access token. 'Subject' (sub) must be a non-empty string." if sub.nil? || sub.empty?
-
-    decoded_token, error = decode_jwt_token(id_token, @firebase_project_id, public_key)
-    raise error if decoded_token.nil?
 
     decoded_token
   end
