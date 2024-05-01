@@ -61,7 +61,7 @@ class GraphqlController < ApplicationController
       user_id = decoded_token[0]["user_id"]
       tenant = current_tenant
       user = User.find_by(
-        firebase_user_id: decoded_token[0]["user_id"],
+        firebase_user_id: user_id,
         tenant_id: tenant.id
       )
       if user.nil?

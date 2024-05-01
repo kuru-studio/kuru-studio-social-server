@@ -42,9 +42,6 @@ gem 'jwt'
 # Ruby implementation of GraphQL
 gem 'graphql', '2.0.16'
 
-# Authentication using Devise
-gem 'devise', '~> 4.2'
-
 # Keep track of models with versions
 gem 'paper_trail'
 
