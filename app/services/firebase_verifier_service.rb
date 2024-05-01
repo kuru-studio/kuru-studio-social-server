@@ -67,7 +67,7 @@ class FirebaseVerifierService
     def retrieve_and_cache_jwt_valid_public_keys
       valid_public_keys = Rails.cache.read(VALID_JWT_PUBLIC_KEYS_RESPONSE_CACHE_KEY)
       if valid_public_keys.nil?
-        uri = URI("https://www.googleapis.com/oauth2/v1/certs")
+        uri = URI("https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com")
         response = Net::HTTP.get_response(uri)
 
         if response.code != '200'
