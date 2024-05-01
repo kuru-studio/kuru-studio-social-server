@@ -58,11 +58,19 @@ class GraphqlController < ApplicationController
       firebase_verifier = FirebaseVerifierService.new(firebase_project_id)
       public_key = nil
       decoded_token = firebase_verifier.decode(token, public_key)
+      user_id = decoded_token[0]["user_id"]
       tenant = current_tenant
-      User.find_by(
+      user = User.find_by(
         firebase_user_id: decoded_token[0]["user_id"],
         tenant_id: tenant.id
       )
+      if user.nil?
+        user = User.create!(
+          firebase_user_id: user_id,
+          tenant_id: tenant.id
+        )
+      end
+      user
     end
   end
 
