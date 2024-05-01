@@ -54,14 +54,23 @@ class GraphqlController < ApplicationController
     if token.blank?
       return nil
     else
-      crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
-      verified_token = crypt.decrypt_and_verify token
-      user_id = verified_token.gsub('user-id:', '')
+      firebase_project_id = Rails.application.credentials.dig(:database, :firebase_project_id)
+      firebase_verifier = FirebaseVerifierService.new(firebase_project_id)
+      public_key = nil
+      decoded_token = firebase_verifier.decode(token, public_key)
+      user_id = decoded_token[0]["user_id"]
       tenant = current_tenant
-      User.find_by(
-        id: user_id,
+      user = User.find_by(
+        firebase_user_id: user_id,
         tenant_id: tenant.id
       )
+      if user.nil?
+        user = User.create!(
+          firebase_user_id: user_id,
+          tenant_id: tenant.id
+        )
+      end
+      user
     end
   end
 

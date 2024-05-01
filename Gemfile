@@ -36,11 +36,11 @@ gem "bootsnap", require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem "rack-cors"
 
+# JSON Web Token for decoding tokens
+gem 'jwt'
+
 # Ruby implementation of GraphQL
 gem 'graphql', '2.0.16'
-
-# Authentication using Devise
-gem 'devise', '~> 4.2'
 
 # Keep track of models with versions
 gem 'paper_trail'

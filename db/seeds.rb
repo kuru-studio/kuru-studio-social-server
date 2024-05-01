@@ -6,16 +6,16 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 users = [
-  { name: "Roy Mustang", email: "roy@fma.com", password: "bl@ck_hAyat3" },
-  { name: "Rintaro Okabe", email: "okabe@gate.com", password: "kvrisv~tensh1" },
-  { name: "Caped Baldy", email: "saitama@opm.com", password: "$up3r$@le" },
-  { name: "Lelouch Lamperouge", email: "lelouch@geass.com", password: "G30ssTh3R3sist@nce" },
-  { name: "Monkey D. Luffy", email: "luffy@strawhat.com", password: "P1rateK1ng" },
-  { name: "Edward Elric", email: "edward@alchemy.com", password: "Ph1los0ph3rsSt0n3" },
-  { name: "Naruto Uzumaki", email: "naruto@hokage.com", password: "B3li3veIt!" },
-  { name: "Spike Spiegel", email: "spike@bebop.com", password: "C0wboyB3b0p" },
-  { name: "Gon Freecss", email: "gon@hunt.com", password: "Hunt3rX" },
-  { name: "Kaneki Ken", email: "kaneki@ghoul.com", password: "C3ntip3d3M@sk" }
+  { name: "Roy Mustang", email: "roy@fma.com", firebase_user_id: "bl@ck_hAyat3" },
+  { name: "Rintaro Okabe", email: "okabe@gate.com", firebase_user_id: "kvrisv~tensh1" },
+  { name: "Caped Baldy", email: "saitama@opm.com", firebase_user_id: "$up3r$@le" },
+  { name: "Lelouch Lamperouge", email: "lelouch@geass.com", firebase_user_id: "G30ssTh3R3sist@nce" },
+  { name: "Monkey D. Luffy", email: "luffy@strawhat.com", firebase_user_id: "P1rateK1ng" },
+  { name: "Edward Elric", email: "edward@alchemy.com", firebase_user_id: "Ph1los0ph3rsSt0n3" },
+  { name: "Naruto Uzumaki", email: "naruto@hokage.com", firebase_user_id: "B3li3veIt!" },
+  { name: "Spike Spiegel", email: "spike@bebop.com", firebase_user_id: "C0wboyB3b0p" },
+  { name: "Gon Freecss", email: "gon@hunt.com", firebase_user_id: "Hunt3rX" },
+  { name: "Kaneki Ken", email: "kaneki@ghoul.com", firebase_user_id: "C3ntip3d3M@sk" }
 ]
 
 # Create 10 posts with quotes
@@ -66,8 +66,6 @@ end
 # Create users and posts
 users.each_with_index do |user, index|
   created_user = User.new(user)
-  created_user.password_confirmation = user[:password]
-  created_user.confirmed_at = Time.now
   created_user.tenant_id = Tenant.first.id
   created_user.save
   created_post = Post.create(content: quotes[index], user_id: created_user.id, tenant_id: Tenant.first.id)
