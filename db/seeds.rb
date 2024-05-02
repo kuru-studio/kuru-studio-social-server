@@ -46,28 +46,23 @@ comments = [
   "This comment was made by Kaneki Ken (Tokyo Ghoul)"
 ]
 
-tenant_keys = [
-  "purrintables",
-  "kurustudio",
-  "boseriko",
-]
-
-tenant_domains = [
-  ["purrintables.com"],
-  ["kuru.studio", "server.kuru.studio", "social.kuru.studio"],
-  ["boseriko.com"],
+tenants = [
+  { api_key: "kurustudio", allowed_domains: ["kuru.studio", "server.kuru.studio", "social.kuru.studio"], firebase_project_id: "kuru-studio-social-firebase-dv" },
+  { api_key: "purrintables", allowed_domains: ["purrintables.com"], firebase_project_id: "purrintables-firebase-dv" },
+  { api_key: "boseriko", allowed_domains: ["boseriko.com"], firebase_project_id: "boseriko-firebase-dv" },
 ]
 
 # Create tenants
 tenant_keys.each_with_index do |tenant, index|
-  Tenant.create(api_key: tenant_keys[index], allowed_domains: tenant_domains[index])
+  Tenant.create(tenant)
 end
 
 # Create users and posts
 users.each_with_index do |user, index|
+  tenant = Tenant.find_by(api_key: "kurustudio")
   created_user = User.new(user)
-  created_user.tenant_id = Tenant.first.id
+  created_user.tenant_id = tenant.id
   created_user.save
-  created_post = Post.create(content: quotes[index], user_id: created_user.id, tenant_id: Tenant.first.id)
-  Comment.create(commentable: created_post, body: comments[index], user_id: created_user.id, tenant_id: Tenant.first.id)
+  created_post = Post.create(content: quotes[index], user_id: created_user.id, tenant_id: tenant.id)
+  Comment.create(commentable: created_post, body: comments[index], user_id: created_user.id, tenant_id: tenant.id)
 end
