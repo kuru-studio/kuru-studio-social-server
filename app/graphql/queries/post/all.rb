@@ -10,7 +10,7 @@ module Queries
         check_tenant!
         check_authentication!
 
-        posts = ::Post.order('created_at DESC')
+        posts = context[:current_tenant].posts.order('created_at DESC')
         posts.offset(offset).limit(limit)
       end
     end

@@ -12,7 +12,7 @@ module Queries
         check_tenant!
         check_authentication!
 
-        comment = ::Comment.where(
+        comment = context[:current_tenant].comments.where(
           commentable_type: commentable_type,
           commentable_id: commentable_id
         ).order('created_at DESC')
