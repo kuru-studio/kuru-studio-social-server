@@ -53,7 +53,7 @@ tenants = [
 ]
 
 # Create tenants
-tenant_keys.each_with_index do |tenant, index|
+tenants.each_with_index do |tenant, index|
   Tenant.create(tenant)
 end
 
