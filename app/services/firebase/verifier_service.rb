@@ -2,7 +2,7 @@ require 'net/http'
 require 'json'
 require 'jwt'
 
-class FirebaseVerifierService
+class Firebase::VerifierService
   VALID_JWT_PUBLIC_KEYS_RESPONSE_CACHE_KEY = "firebase_jwt_public_keys_cache_key"
   JWT_ALGORITHM = 'RS256'
 
