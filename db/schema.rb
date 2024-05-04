@@ -42,6 +42,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_28_070217) do
     t.text "included_features", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["api_key"], name: "index_tenants_on_api_key", unique: true
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

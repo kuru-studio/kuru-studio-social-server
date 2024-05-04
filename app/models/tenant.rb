@@ -1,4 +1,6 @@
 class Tenant < ApplicationRecord
+  validates :api_key, uniqueness: true
+
   has_many :users
   has_many :posts
   has_many :comments
