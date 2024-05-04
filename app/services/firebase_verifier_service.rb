@@ -28,6 +28,9 @@ class FirebaseVerifierService
     sub = payload['sub']
     raise "Invalid access token. 'Subject' (sub) must be a non-empty string." if sub.nil? || sub.empty?
 
+    exp = payload['exp']
+    raise "Invalid access token. Token has expired." if Time.at(exp) < Time.now
+
     decoded_token
   end
 
