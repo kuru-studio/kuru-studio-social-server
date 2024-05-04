@@ -4,6 +4,7 @@ class CreateTenants < ActiveRecord::Migration[7.0]
       t.string :firebase_project_id
       t.string :api_key
       t.text :allowed_domains, array: true, default: []
+      t.text :included_features, array: true, default: []
 
       t.timestamps
     end
