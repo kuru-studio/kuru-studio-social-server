@@ -4,6 +4,10 @@ class Tenant < ApplicationRecord
   has_many :users
   has_many :posts
   has_many :comments
+  has_many :carts
+  has_many :inventories
+  has_many :orders
+  has_many :products
 
   %w(shop social forum).each do |feature|
     define_method("is_#{feature}_enabled?") do
